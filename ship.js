@@ -1,7 +1,9 @@
 const shipSize = 20;
-const rotateSpeed = 2;
+const rotateSpeed = 3;
 const thrust = 8 / 60;
 const maxSpeed = 10;
+let opacity = 1;
+let descending = true;
 
 class Ship {
   constructor(canvas, radius) {
@@ -18,22 +20,15 @@ class Ship {
 
   draw(ctx) {
     ctx.fillStyle = "white";
-    ctx.strokeStyle = this.invulnerable ? "red" : "white";
-    ctx.beginPath();
-    ctx.moveTo(
-      this.x - this.r * Math.cos(radians(this.a)),
-      this.y - this.r * Math.sin(radians(this.a))
-    );
-    ctx.lineTo(
-      this.x + this.r * Math.cos(radians(40 + this.a - 90)),
-      this.y + this.r * Math.sin(radians(40 + this.a - 90))
-    );
-    ctx.lineTo(
-      this.x + this.r * Math.cos(radians(140 + this.a - 90)),
-      this.y + this.r * Math.sin(radians(140 + this.a - 90))
-    );
-    ctx.closePath();
-    ctx.stroke();
+    let colour = "white";
+
+    if (this.invulnerable) {
+      colour = `rgba(255, 255, 255, ${opacity})`;
+      opacity = descending ? opacity - 0.1 : opacity + 0.1;
+      if (opacity > 1) descending = true;
+      if (opacity < 0) descending = false;
+    }
+    drawShip(ctx, colour, this.x, this.y, this.r, this.a);
   }
 
   accelerate() {
@@ -50,12 +45,13 @@ class Ship {
     const a = Math.abs(this.x - asteroid.x);
     const b = Math.abs(this.y - asteroid.y);
     const c = Math.sqrt(a * a + b * b);
-    if (c < asteroid.r + this.r) {
+    if (c < asteroid.r + this.r && !this.invulnerable) {
       this.reset();
     }
   }
 
   reset() {
+    lives--;
     this.x = this.startX;
     this.y = this.startY;
     this.vx = 0;

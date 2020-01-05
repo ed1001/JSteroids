@@ -32,11 +32,13 @@ class Bullet {
     );
   }
 
-  collide(asteroid, asteroids, bullets) {
+  collide(asteroid, asteroids, bullets, canvas) {
     const a = Math.abs(this.x - asteroid.x);
     const b = Math.abs(this.y - asteroid.y);
     const c = Math.sqrt(a * a + b * b);
     if (c < asteroid.r) {
+      incrementScore(asteroid.r);
+      asteroid.break(asteroids, canvas);
       asteroids.splice(asteroids.indexOf(asteroid), 1);
       bullets.splice(bullets.indexOf(this), 1);
     }

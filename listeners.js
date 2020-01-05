@@ -11,6 +11,7 @@ document.addEventListener("keydown", e => {
       break;
     case " ":
       if (loaded) Bullet.create(bullets);
+      if (gameState === gameStates.pre) gameState = gameStates.play;
       loaded = false;
       break;
     default:

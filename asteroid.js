@@ -1,5 +1,6 @@
-const asteroidCount = 4;
+let asteroidCount = 4;
 const asteroidSizes = Object.freeze({ large: 90, medium: 35, small: 12 });
+const spacing = 300;
 
 class Asteroid {
   constructor(sides, x, y, r, vx, vy) {
@@ -13,14 +14,14 @@ class Asteroid {
     this.rVar = [];
   }
 
-  static create(asteroids, radius, canvas) {
+  static create(asteroids, radius, x, y, vx, vy) {
     const asteroid = new Asteroid(
       Math.floor(Math.random() * 4) + 10,
-      Math.floor(Math.random() * canvas.width),
-      Math.floor(Math.random() * canvas.height),
+      x,
+      y,
       radius,
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1
+      vx,
+      vy
     );
     for (let i = 0; i < asteroid.sides; i++) {
       asteroid.rVar.push(
@@ -31,10 +32,30 @@ class Asteroid {
     asteroids.push(asteroid);
   }
 
-  static init(count) {
+  static init(count, ship) {
+    let x;
+    let y;
     for (let i = 0; i < count; i++) {
-      Asteroid.create(asteroids, asteroidSizes.large, canvas);
+      do {
+        x = Math.floor(Math.random() * canvas.width);
+        y = Math.floor(Math.random() * canvas.height);
+      } while (Asteroid.checkProximity(x, y, ship.x, ship.y));
+      Asteroid.create(
+        asteroids,
+        asteroidSizes.large,
+        x,
+        y,
+        Math.random() * 3 - 2,
+        Math.random() * 3 - 2
+      );
     }
+  }
+
+  static checkProximity(x, y, x1, y1) {
+    const a = Math.abs(x - x1);
+    const b = Math.abs(y - y1);
+    const c = Math.sqrt(a * a + b * b);
+    return c < spacing;
   }
 
   draw(ctx) {
@@ -56,5 +77,16 @@ class Asteroid {
     }
     ctx.closePath();
     ctx.stroke();
+  }
+
+  break(asteroids) {
+    if (this.r === asteroidSizes.small) return;
+
+    const size =
+      this.r === asteroidSizes.large
+        ? asteroidSizes.medium
+        : asteroidSizes.small;
+    Asteroid.create(asteroids, size, this.x, this.y, this.vy, this.vx);
+    Asteroid.create(asteroids, size, this.x, this.y, -this.vy, -this.vx);
   }
 }

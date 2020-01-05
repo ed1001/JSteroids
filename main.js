@@ -1,36 +1,33 @@
 var canvas = document.getElementById("game-area");
 var ctx = canvas.getContext("2d");
 
+const gameStates = Object.freeze({ pre: 90, play: 35, post: 12 });
+let gameState = gameStates.pre;
+let lives = 1;
+let score = 0;
+let level = 1;
+let restartTimer = 3 * 60;
 const ship = new Ship(canvas, shipSize);
 let bullets = [];
-const asteroids = [];
+let asteroids = [];
 
-Asteroid.init(asteroidCount);
+Asteroid.init(asteroidCount, ship);
 window.requestAnimationFrame(update);
 
 function update() {
-  //fill BG
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  drawBg(ctx);
 
-  ship.draw(ctx);
-  ship.transform();
-
-  bullets = bullets.filter(bullet => bullet.t > 0);
-  bullets.forEach(bullet => {
-    bullet.t -= 1000 / 60;
-    translate(bullet);
-    bullet.draw(ctx);
-  });
-
-  asteroids.forEach(asteroid => {
-    translate(asteroid);
-    bullets.forEach(bullet => {
-      bullet.collide(asteroid, asteroids, bullets);
-    });
-    ship.collide(asteroid);
-    asteroid.draw(ctx);
-  });
+  switch (gameState) {
+    case gameStates.pre:
+      pre(ctx);
+      break;
+    case gameStates.play:
+      play(ctx);
+      break;
+    case gameStates.post:
+      post(ctx);
+      break;
+  }
 
   window.requestAnimationFrame(update);
 }
