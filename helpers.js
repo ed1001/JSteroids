@@ -26,6 +26,11 @@ function drawTitleScreen() {
   ctx.fillStyle = "white";
   ctx.fillText("JS-teroids", 360, 360);
   ctx.font = "40px Ariel";
+  colour = `rgba(255, 255, 255, ${opacity})`;
+  ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+  opacity = descending ? opacity - 0.02 : opacity + 0.02;
+  if (opacity > 0.9) descending = true;
+  if (opacity < 0.6) descending = false;
   ctx.fillText("push space to start", 450, 420);
 }
 
@@ -71,4 +76,28 @@ function incrementScore(size) {
     default:
       break;
   }
+}
+
+function playSound(file) {
+  const sound = new Audio(file);
+  sound.play();
+}
+
+function playBoomSound(size) {
+  let sound;
+
+  switch (size) {
+    case asteroidSizes.large:
+      sound = new Audio("boom_big.mp3");
+      break;
+    case asteroidSizes.medium:
+      sound = new Audio("boom_mid.mp3");
+      break;
+    case asteroidSizes.small:
+      sound = new Audio("boom_small.mp3");
+      break;
+    default:
+      break;
+  }
+  sound.play();
 }

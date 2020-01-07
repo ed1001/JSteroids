@@ -3,13 +3,15 @@ var ctx = canvas.getContext("2d");
 
 const gameStates = Object.freeze({ pre: 90, play: 35, post: 12 });
 let gameState = gameStates.pre;
-let lives = 1;
+let lives = 4;
 let score = 0;
 let level = 1;
 let restartTimer = 3 * 60;
 const ship = new Ship(canvas, shipSize);
+
 let bullets = [];
 let asteroids = [];
+let debris = [];
 
 Asteroid.init(asteroidCount, ship);
 window.requestAnimationFrame(update);

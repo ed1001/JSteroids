@@ -46,7 +46,9 @@ class Ship {
     const b = Math.abs(this.y - asteroid.y);
     const c = Math.sqrt(a * a + b * b);
     if (c < asteroid.r + this.r && !this.invulnerable) {
+      Particle.explosion(debris, this);
       this.reset();
+      playSound("ship_crash.mp3");
     }
   }
 

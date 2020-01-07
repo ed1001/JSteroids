@@ -10,8 +10,11 @@ document.addEventListener("keydown", e => {
       ship.thrusting = true;
       break;
     case " ":
-      if (loaded) Bullet.create(bullets);
-      if (gameState === gameStates.pre) gameState = gameStates.play;
+      if (loaded && gameState === gameStates.play) Bullet.create(bullets);
+      if (gameState === gameStates.pre) {
+        playSound("start_game.mp3");
+        gameState = gameStates.play;
+      }
       loaded = false;
       break;
     default:

@@ -4,15 +4,15 @@ function pre(ctx) {
   drawTitleScreen();
   asteroids.forEach(asteroid => {
     translate(asteroid);
-    bullets.forEach(bullet => {
-      bullet.collide(asteroid, asteroids, bullets, canvas);
-    });
     asteroid.draw(ctx);
   });
 }
 
 function play(ctx) {
-  if (lives <= 0) gameState = gameStates.post;
+  if (lives <= 0) {
+    gameState = gameStates.post;
+    playSound("game_over.mp3");
+  }
 
   drawScore(ctx);
 
@@ -27,15 +27,25 @@ function play(ctx) {
   bullets.forEach(bullet => {
     bullet.t -= 1000 / 60;
     translate(bullet);
-    bullet.draw(ctx);
+    bullet.draw(ctx, 3);
   });
 
-  if (!asteroids.length) Asteroid.init(++asteroidCount, ship);
+  debris = debris.filter(particle => particle.t > 0);
+  debris.forEach(particle => {
+    particle.t -= 1000 / 60;
+    translate(particle);
+    particle.draw(ctx, 1);
+  });
+
+  if (!asteroids.length) {
+    playSound("level_complete.mp3");
+    Asteroid.init(++asteroidCount, ship);
+  }
 
   asteroids.forEach(asteroid => {
     translate(asteroid);
     bullets.forEach(bullet => {
-      bullet.collide(asteroid, asteroids, bullets, canvas);
+      bullet.collide(asteroid, asteroids, bullets, debris, canvas);
     });
     ship.collide(asteroid);
     asteroid.draw(ctx);
