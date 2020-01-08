@@ -8,6 +8,10 @@ document.addEventListener("keydown", e => {
       break;
     case "ArrowUp":
       ship.thrusting = true;
+      if (!playingThrustSound && gameState === gameStates.play) {
+        playPauseLoop(thrustSound, true);
+        playingThrustSound = true;
+      }
       break;
     case " ":
       if (loaded && gameState === gameStates.play) Bullet.create(bullets);
@@ -32,6 +36,8 @@ document.addEventListener("keyup", e => {
       break;
     case "ArrowUp":
       ship.thrusting = false;
+      playingThrustSound = false;
+      playPauseLoop(thrustSound, false);
       break;
     case " ":
       loaded = true;

@@ -1,10 +1,9 @@
-// ! make this a class and add the environment variables here as properties
-
 function pre(ctx) {
   score = 0;
   drawTitleScreen();
   asteroids.forEach(asteroid => {
     translate(asteroid);
+    asteroid.bounceTitle();
     asteroid.draw(ctx);
   });
 }
@@ -24,8 +23,14 @@ function play(ctx) {
   ship.draw(ctx);
   ship.transform();
 
-  bullets = Particle.drawParticles(bullets, bulletSize);
-  debris = Particle.drawParticles(debris, debrisSize);
+  bullets = Particle.drawParticles(bullets, bulletSize, "white");
+  debris = Particle.drawParticles(debris, debrisSize, "white");
+  thrustRed = Math.random() * 255;
+  thrustParticles = Particle.drawParticles(
+    thrustParticles,
+    thrustSize,
+    `rgb(255, ${thrustRed}, 0)`
+  );
 
   if (!asteroids.length) {
     playSound("level_complete.mp3");

@@ -27,12 +27,12 @@ class Particle {
     );
   }
 
-  static drawParticles(particles, size) {
+  static drawParticles(particles, size, colour) {
     particles = particles.filter(particle => particle.t > 0);
     particles.forEach(particle => {
       particle.t -= 1000 / 60;
       translate(particle);
-      particle.draw(ctx, size);
+      particle.draw(ctx, size, colour);
     });
     return particles;
   }
@@ -43,8 +43,8 @@ class Particle {
     }
   }
 
-  draw(ctx, size) {
-    ctx.fillStyle = "white";
+  draw(ctx, size, colour) {
+    ctx.fillStyle = colour;
     ctx.fillRect(this.x - size / 2, this.y - size / 2, size, size);
   }
 }

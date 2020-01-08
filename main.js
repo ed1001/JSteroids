@@ -12,6 +12,7 @@ const ship = new Ship(canvas, shipSize);
 let bullets = [];
 let asteroids = [];
 let debris = [];
+let thrustParticles = [];
 
 Asteroid.init(asteroidCount, ship);
 window.requestAnimationFrame(update);

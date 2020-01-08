@@ -24,12 +24,13 @@ class Ship {
     ctx.fillStyle = colour;
 
     if (this.invulnerable) colour = flashFillStyle(0.1, 1, colour);
+    if (this.thrusting) Thrust.create(thrustParticles, this);
     drawShip(ctx, colour, this.x, this.y, this.r, this.a);
   }
 
   accelerate() {
     this.vx = capNum((this.vx -= thrust * Math.cos(radians(this.a))), maxSpeed);
-    this.vy = capNum((this.vy += thrust * Math.sin(radians(this.a))), maxSpeed);
+    this.vy = capNum((this.vy -= thrust * Math.sin(radians(this.a))), maxSpeed);
   }
 
   transform() {

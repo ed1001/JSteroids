@@ -1,6 +1,11 @@
 let asteroidCount = 4;
 const asteroidSizes = Object.freeze({ large: 90, medium: 35, small: 12 });
+const asteroidSpeed = 4;
 const spacing = 300;
+const leftBoundX = 360 - asteroidSizes["large"];
+const rightBoundX = 875 + asteroidSizes["large"];
+const topBoundY = 270 - asteroidSizes["large"];
+const botBoundY = 430 + asteroidSizes["large"];
 
 class Asteroid {
   constructor(sides, x, y, r, vx, vy) {
@@ -45,8 +50,8 @@ class Asteroid {
         asteroidSizes.large,
         x,
         y,
-        Math.random() * 3 - 2,
-        Math.random() * 3 - 2
+        Math.random() * asteroidSpeed - asteroidSpeed / 2,
+        Math.random() * asteroidSpeed - asteroidSpeed / 2
       );
     }
   }
@@ -88,5 +93,30 @@ class Asteroid {
         : asteroidSizes.small;
     Asteroid.create(asteroids, size, this.x, this.y, this.vy, this.vx);
     Asteroid.create(asteroids, size, this.x, this.y, -this.vy, -this.vx);
+  }
+
+  bounceTitle() {
+    if (
+      between(leftBoundX, rightBoundX, this.x) &&
+      between(topBoundY, botBoundY, this.y)
+    ) {
+      if (this.vx > 0 && this.vy > 0) {
+        this.x - leftBoundX > this.y - topBoundY
+          ? (this.vy = -this.vy)
+          : (this.vx = -this.vx);
+      } else if (this.vx > 0 && this.vy < 0) {
+        this.x - leftBoundX > botBoundY - this.y
+          ? (this.vy = -this.vy)
+          : (this.vx = -this.vx);
+      } else if (this.vx < 0 && this.vy > 0) {
+        rightBoundX - this.x > this.y - topBoundY
+          ? (this.vy = -this.vy)
+          : (this.vx = -this.vx);
+      } else if (this.vx < 0 && this.vy < 0) {
+        rightBoundX - this.x > botBoundY - this.y
+          ? (this.vy = -this.vy)
+          : (this.vx = -this.vx);
+      }
+    }
   }
 }

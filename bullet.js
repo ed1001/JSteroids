@@ -21,7 +21,7 @@ class Bullet extends Particle {
         ship.x - ship.r * Math.cos(radians(ship.a)),
         ship.y - ship.r * Math.sin(radians(ship.a)),
         bulletVelocity * -Math.cos(radians(ship.a)) + ship.vx,
-        bulletVelocity * Math.sin(radians(ship.a)) + ship.vy,
+        bulletVelocity * -Math.sin(radians(ship.a)) + ship.vy,
         bulletTime
       )
     );

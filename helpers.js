@@ -8,7 +8,7 @@ function capNum(num, max) {
 
 function translate(object) {
   object.x += object.vx;
-  object.y -= object.vy;
+  object.y += object.vy;
 
   if (object.x > canvas.width) object.x = 0;
   if (object.x < 0) object.x = canvas.width;
@@ -88,6 +88,10 @@ function playSound(file) {
   sound.play();
 }
 
+function playPauseLoop(sound, play) {
+  play ? sound.play() : sound.pause();
+}
+
 function playBoomSound(size) {
   let sound;
 
@@ -105,4 +109,8 @@ function playBoomSound(size) {
       break;
   }
   sound.play();
+}
+
+function between(a, b, x) {
+  return x > a && x < b;
 }
