@@ -16,18 +16,14 @@ class Ship {
     this.rot = 0;
     this.thrusting = false;
     this.invulnerable = false;
+    this.lives = lives;
   }
 
   draw(ctx) {
-    ctx.fillStyle = "white";
     let colour = "white";
+    ctx.fillStyle = colour;
 
-    if (this.invulnerable) {
-      colour = `rgba(255, 255, 255, ${opacity})`;
-      opacity = descending ? opacity - 0.1 : opacity + 0.1;
-      if (opacity > 1) descending = true;
-      if (opacity < 0) descending = false;
-    }
+    if (this.invulnerable) colour = flashFillStyle(0.1, 1, colour);
     drawShip(ctx, colour, this.x, this.y, this.r, this.a);
   }
 
@@ -53,11 +49,12 @@ class Ship {
   }
 
   reset() {
-    lives--;
+    this.lives--;
     this.x = this.startX;
     this.y = this.startY;
     this.vx = 0;
     this.vy = 0;
+    this.a = 90;
     this.invulnerable = true;
     setTimeout(() => {
       this.invulnerable = false;

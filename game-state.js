@@ -1,6 +1,7 @@
 // ! make this a class and add the environment variables here as properties
 
 function pre(ctx) {
+  score = 0;
   drawTitleScreen();
   asteroids.forEach(asteroid => {
     translate(asteroid);
@@ -9,33 +10,22 @@ function pre(ctx) {
 }
 
 function play(ctx) {
-  if (lives <= 0) {
+  if (ship.lives <= 0) {
     gameState = gameStates.post;
     playSound("game_over.mp3");
   }
 
   drawScore(ctx);
 
-  for (let i = 0; i < lives; i++) {
+  for (let i = 0; i < ship.lives; i++) {
     drawShip(ctx, "white", 55 + i * 20, 70, 10, 90);
   }
 
   ship.draw(ctx);
   ship.transform();
 
-  bullets = bullets.filter(bullet => bullet.t > 0);
-  bullets.forEach(bullet => {
-    bullet.t -= 1000 / 60;
-    translate(bullet);
-    bullet.draw(ctx, 3);
-  });
-
-  debris = debris.filter(particle => particle.t > 0);
-  debris.forEach(particle => {
-    particle.t -= 1000 / 60;
-    translate(particle);
-    particle.draw(ctx, 1);
-  });
+  bullets = Particle.drawParticles(bullets, bulletSize);
+  debris = Particle.drawParticles(debris, debrisSize);
 
   if (!asteroids.length) {
     playSound("level_complete.mp3");
@@ -53,6 +43,7 @@ function play(ctx) {
 }
 
 function post(ctx) {
+  debris = Particle.drawParticles(debris, debrisSize);
   drawScore(ctx);
   drawGameOverScreen();
   asteroids.forEach(asteroid => {
@@ -63,14 +54,13 @@ function post(ctx) {
     asteroid.draw(ctx);
   });
   restartTimer--;
-  console.log(restartTimer);
+  restartTimer;
   if (restartTimer <= 0) resetGame();
 }
 
 function resetGame() {
-  console.log("reset");
   asteroids = [];
-  lives = 3;
+  ship.lives = lives;
   Asteroid.init(asteroidCount, ship);
   gameState = gameStates.pre;
   restartTimer = 3 * 60;

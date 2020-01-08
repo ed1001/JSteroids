@@ -4,7 +4,7 @@ var ctx = canvas.getContext("2d");
 const gameStates = Object.freeze({ pre: 90, play: 35, post: 12 });
 let gameState = gameStates.pre;
 let lives = 4;
-let score = 0;
+let score;
 let level = 1;
 let restartTimer = 3 * 60;
 const ship = new Ship(canvas, shipSize);

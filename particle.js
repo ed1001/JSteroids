@@ -1,5 +1,6 @@
 const debrisCount = 30;
 const debrisTime = 500;
+const debrisSize = 1;
 const debrisVelocity = 4;
 
 class Particle {
@@ -12,7 +13,6 @@ class Particle {
   }
 
   static create(debris, asteroid) {
-    // console.log(debris);
     const angle = Math.random() * radians(360);
     debris.push(
       new Particle(
@@ -27,8 +27,17 @@ class Particle {
     );
   }
 
+  static drawParticles(particles, size) {
+    particles = particles.filter(particle => particle.t > 0);
+    particles.forEach(particle => {
+      particle.t -= 1000 / 60;
+      translate(particle);
+      particle.draw(ctx, size);
+    });
+    return particles;
+  }
+
   static explosion(debris, asteroid) {
-    console.log(asteroid);
     for (let i = 0; i < debrisCount; i++) {
       Particle.create(debris, asteroid);
     }

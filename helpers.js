@@ -23,15 +23,20 @@ function drawBg(ctx) {
 
 function drawTitleScreen() {
   ctx.font = "130px Ariel";
-  ctx.fillStyle = "white";
+  let colour = "white";
+  ctx.fillStyle = colour;
   ctx.fillText("JS-teroids", 360, 360);
   ctx.font = "40px Ariel";
-  colour = `rgba(255, 255, 255, ${opacity})`;
-  ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-  opacity = descending ? opacity - 0.02 : opacity + 0.02;
-  if (opacity > 0.9) descending = true;
-  if (opacity < 0.6) descending = false;
+  colour = flashFillStyle(0.03, 0.5, colour);
+  ctx.fillStyle = colour;
   ctx.fillText("push space to start", 450, 420);
+}
+
+function flashFillStyle(speed, depth, colour) {
+  opacity = descending ? opacity - speed : opacity + speed;
+  if (opacity > 1) descending = true;
+  if (opacity < 1 - depth) descending = false;
+  return `rgba(255, 255, 255, ${opacity})`;
 }
 
 function drawGameOverScreen() {
