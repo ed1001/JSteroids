@@ -1,13 +1,11 @@
 var canvas = document.getElementById("game-area");
 var ctx = canvas.getContext("2d");
 
-const gameStates = Object.freeze({ pre: 90, play: 35, post: 12 });
-let gameState = gameStates.pre;
 let lives = 4;
-let score;
-let level = 1;
-let restartTimer = 3 * 60;
-const ship = new Ship(canvas, shipSize);
+let asteroidCount = 4;
+let hiScore = 0;
+const restartTimerSecs = 3;
+const gameColour = "rgba(0, 255, 255, 1)";
 
 let bullets = [];
 let asteroids = [];
@@ -15,21 +13,21 @@ let debris = [];
 let shipDebris = [];
 let thrustParticles = [];
 
-Asteroid.init(asteroidCount, ship);
+let game = new Game(lives, restartTimerSecs);
 window.requestAnimationFrame(update);
 
 function update() {
   drawBg(ctx);
 
-  switch (gameState) {
+  switch (game.state) {
     case gameStates.pre:
-      pre(ctx);
+      game.pre();
       break;
     case gameStates.play:
-      play(ctx);
+      game.play();
       break;
     case gameStates.post:
-      post(ctx);
+      game.post();
       break;
   }
 

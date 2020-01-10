@@ -2,11 +2,22 @@ const shipSize = 20;
 const rotateSpeed = 3;
 const thrust = 8 / 60;
 const maxSpeed = 10;
+
 const shipDebrisTime = 1500;
 const shipDebrisSize = 4;
+
 let shipDebrisOpacity = 1;
 let opacity = 1;
-let descending = true;
+let opacityDesc = true;
+
+const thrustTime = 85;
+const thrustVelocity = 5;
+const thrustSize = 4;
+const thrustVariance = 22;
+let thrustRed;
+let playingThrustSound = false;
+const thrustSound = new Audio("thrust.mp3");
+thrustSound.loop = true;
 
 class Ship {
   constructor(canvas, radius) {
@@ -22,12 +33,11 @@ class Ship {
     this.lives = lives;
   }
 
-  draw(ctx) {
-    let colour = "white";
+  draw(ctx, colour) {
     ctx.fillStyle = colour;
 
     if (this.invulnerable) colour = flashFillStyle(0.1, 1, colour);
-    if (this.thrusting) Thrust.create(thrustParticles, this);
+    if (this.thrusting) this.thrust();
     drawShip(ctx, colour, this.x, this.y, this.r, this.a);
   }
 
@@ -39,7 +49,7 @@ class Ship {
   transform() {
     if (this.thrusting) this.accelerate();
     translate(this);
-    ship.a += ship.rot;
+    this.a += this.rot;
   }
 
   shoot() {
@@ -81,7 +91,7 @@ class Ship {
     shipDebris = Particle.drawParticles(
       shipDebris,
       shipDebrisSize,
-      `rgba(255, 255, 255, ${shipDebrisOpacity})`
+      `${gameColour.slice(0, -2)}${shipDebrisOpacity})`
     );
   }
 
@@ -96,5 +106,21 @@ class Ship {
     setTimeout(() => {
       this.invulnerable = false;
     }, 3000);
+  }
+
+  thrust() {
+    const angle =
+      Math.random() *
+        (radians(this.a + thrustVariance) - radians(this.a - thrustVariance)) +
+      radians(this.a - thrustVariance);
+    thrustParticles.push(
+      new Particle(
+        this.x + ((this.r * 3) / 5) * Math.cos(radians(this.a)),
+        this.y + ((this.r * 3) / 5) * Math.sin(radians(this.a)),
+        thrustVelocity * Math.cos(angle),
+        thrustVelocity * Math.sin(angle),
+        Math.floor((Math.random() * thrustTime) / 2) + thrustTime / 2
+      )
+    );
   }
 }

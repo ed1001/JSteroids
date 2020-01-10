@@ -1,7 +1,6 @@
-let asteroidCount = 4;
 const asteroidSizes = Object.freeze({ large: 90, medium: 35, small: 12 });
 const asteroidSpeed = 4;
-const spacing = 300;
+const spacing = 400;
 const leftBoundX = 360 - asteroidSizes["large"];
 const rightBoundX = 875 + asteroidSizes["large"];
 const topBoundY = 270 - asteroidSizes["large"];
@@ -38,6 +37,7 @@ class Asteroid {
   }
 
   static init(count, ship) {
+    asteroids = [];
     let x;
     let y;
     for (let i = 0; i < count; i++) {
@@ -66,7 +66,7 @@ class Asteroid {
   draw(ctx) {
     let angle = this.a;
     let radiusVar;
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = gameColour;
     ctx.beginPath();
     ctx.moveTo(
       this.x + radiusVar * Math.cos(radians(angle)),
