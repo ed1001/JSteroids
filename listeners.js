@@ -14,7 +14,10 @@ document.addEventListener("keydown", e => {
       }
       break;
     case " ":
-      if (loaded && gameState === gameStates.play) Bullet.create(bullets);
+      if (loaded && gameState === gameStates.play) {
+        ship.shoot();
+        playSound("shoot.mp3");
+      }
       if (gameState === gameStates.pre) {
         playSound("start_game.mp3");
         gameState = gameStates.play;

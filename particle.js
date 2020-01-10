@@ -12,39 +12,35 @@ class Particle {
     this.t = t;
   }
 
-  static create(debris, asteroid) {
-    const angle = Math.random() * radians(360);
-    debris.push(
-      new Particle(
-        asteroid.x,
-        asteroid.y,
-        Math.floor((Math.random() * debrisVelocity) / 2) +
-          (debrisVelocity / 2) * -Math.cos(angle),
-        Math.floor((Math.random() * debrisVelocity) / 2) +
-          (debrisVelocity / 2) * Math.sin(angle),
-        Math.floor((Math.random() * debrisTime) / 2) + debrisTime / 2
-      )
-    );
-  }
-
   static drawParticles(particles, size, colour) {
     particles = particles.filter(particle => particle.t > 0);
     particles.forEach(particle => {
       particle.t -= 1000 / 60;
       translate(particle);
-      particle.draw(ctx, size, colour);
+      ctx.fillStyle = colour;
+      ctx.fillRect(particle.x - size / 2, particle.y - size / 2, size, size);
     });
     return particles;
   }
 
-  static explosion(debris, asteroid) {
-    for (let i = 0; i < debrisCount; i++) {
-      Particle.create(debris, asteroid);
+  static burst(array, count, reference, t, minA, maxA) {
+    for (let i = 0; i < count; i++) {
+      const angle =
+        Math.random() * (radians(maxA) - radians(minA)) + radians(minA);
+      array.push(
+        new Particle(
+          reference.x,
+          reference.y,
+          Math.floor((Math.random() * debrisVelocity) / 2) +
+            (debrisVelocity / 2) * -Math.cos(angle),
+          Math.floor((Math.random() * debrisVelocity) / 2) +
+            (debrisVelocity / 2) * Math.sin(angle),
+          t
+        )
+      );
     }
   }
-
-  draw(ctx, size, colour) {
-    ctx.fillStyle = colour;
-    ctx.fillRect(this.x - size / 2, this.y - size / 2, size, size);
-  }
 }
+
+// Math.random() * (radians(ship.a + 22) - radians(ship.a - 22)) +
+// radians(ship.a - 22);

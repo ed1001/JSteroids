@@ -25,6 +25,8 @@ function play(ctx) {
 
   bullets = Particle.drawParticles(bullets, bulletSize, "white");
   debris = Particle.drawParticles(debris, debrisSize, "white");
+  ship.drawDebris();
+
   thrustRed = Math.random() * 255;
   thrustParticles = Particle.drawParticles(
     thrustParticles,
@@ -40,7 +42,7 @@ function play(ctx) {
   asteroids.forEach(asteroid => {
     translate(asteroid);
     bullets.forEach(bullet => {
-      bullet.collide(asteroid, asteroids, bullets, debris, canvas);
+      asteroid.collide(asteroid, asteroids, bullets, debris, canvas);
     });
     ship.collide(asteroid);
     asteroid.draw(ctx);
@@ -49,6 +51,7 @@ function play(ctx) {
 
 function post(ctx) {
   debris = Particle.drawParticles(debris, debrisSize);
+  ship.drawDebris();
   drawScore(ctx);
   drawGameOverScreen();
   asteroids.forEach(asteroid => {

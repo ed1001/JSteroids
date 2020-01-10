@@ -84,6 +84,29 @@ class Asteroid {
     ctx.stroke();
   }
 
+  collide(canvas) {
+    bullets.forEach(bullet => {
+      const a = Math.abs(this.x - bullet.x);
+      const b = Math.abs(this.y - bullet.y);
+      const c = Math.sqrt(a * a + b * b);
+      if (c < this.r) {
+        incrementScore(this.r);
+        this.break(asteroids, canvas);
+        asteroids.splice(asteroids.indexOf(this), 1);
+        bullets.splice(bullets.indexOf(bullet), 1);
+        Particle.burst(
+          debris,
+          debrisCount,
+          this,
+          Math.floor((Math.random() * debrisTime) / 2) + debrisTime / 2,
+          0,
+          360
+        );
+        playBoomSound(this.r);
+      }
+    });
+  }
+
   break(asteroids) {
     if (this.r === asteroidSizes.small) return;
 
