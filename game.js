@@ -6,6 +6,7 @@ class Game {
     this.ship = new Ship(canvas, shipSize, false);
     this.state = gameStates.pre;
     this.mode = gameModes[currentMode];
+    this.asteroidCount = asteroidCount;
     Asteroid.init(asteroidCount, this.ship, this.mode);
   }
 
@@ -48,7 +49,7 @@ class Game {
 
     if (!asteroids.length) {
       playSound("level_complete.mp3");
-      Asteroid.init(++asteroidCount, this.ship, this.mode);
+      Asteroid.init(++this.asteroidCount, this.ship, this.mode);
     }
 
     this._engageAsteroids();
@@ -65,7 +66,8 @@ class Game {
 
   setMode(currentMode) {
     this.mode = gameModes[currentMode];
-    Asteroid.init(asteroidCount * this.mode, this.ship, this.mode);
+    this.asteroidCount = Math.ceil(asteroidCount * this.mode);
+    Asteroid.init(this.asteroidCount, this.ship, this.mode);
   }
 
   _engageAsteroids() {

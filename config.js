@@ -1,6 +1,6 @@
 // game
 const gameStates = Object.freeze({ pre: 1, play: 2, post: 3 });
-const gameModes = Object.freeze({ 1: 1, 2: 1.5, 3: 2 });
+const gameModes = Object.freeze({ 1: 1, 2: 1.5, 3: 2.5 });
 let currentMode = 1;
 
 // ship
@@ -31,7 +31,7 @@ const spacing = 400;
 const leftBoundX = 360 - asteroidSizes["large"];
 const rightBoundX = 875 + asteroidSizes["large"];
 const topBoundY = 270 - asteroidSizes["large"];
-const botBoundY = 430 + asteroidSizes["large"];
+const botBoundY = 460 + asteroidSizes["large"];
 
 // particle
 const bulletSize = 3;
