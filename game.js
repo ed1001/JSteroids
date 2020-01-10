@@ -32,7 +32,7 @@ class Game {
     drawText("20px Georgia", `Hi-Score: ${hiScore}`, 1000, 50, false);
 
     for (let i = 0; i < this.ship.lives; i++) {
-      drawShip(ctx, gameColour, 55 + i * 20, 70, 10, 90);
+      drawShip(ctx, gameColour, 55 + i * 22, 70, 10, 90);
     }
 
     this.ship.draw(ctx, gameColour);

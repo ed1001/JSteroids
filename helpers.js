@@ -50,6 +50,15 @@ function drawShip(ctx, colour, x, y, r, a) {
   ctx.beginPath();
   ctx.moveTo(x - r * Math.cos(radians(a)), y - r * Math.sin(radians(a)));
   ctx.lineTo(
+    x + r * (6 / 4) * Math.cos(radians(-40 + a)),
+    y + r * (6 / 4) * Math.sin(radians(-40 + a))
+  );
+  ctx.moveTo(x - r * Math.cos(radians(a)), y - r * Math.sin(radians(a)));
+  ctx.lineTo(
+    x + r * (6 / 4) * Math.cos(radians(40 + a)),
+    y + r * (6 / 4) * Math.sin(radians(40 + a))
+  );
+  ctx.moveTo(
     x + r * Math.cos(radians(-50 + a)),
     y + r * Math.sin(radians(-50 + a))
   );
@@ -57,7 +66,6 @@ function drawShip(ctx, colour, x, y, r, a) {
     x + r * Math.cos(radians(50 + a)),
     y + r * Math.sin(radians(50 + a))
   );
-  ctx.closePath();
   ctx.stroke();
 }
 
