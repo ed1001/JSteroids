@@ -23,7 +23,7 @@ class Game {
   play() {
     if (this.ship.lives <= 0) {
       this.state = gameStates.post;
-      playSound("game_over.mp3");
+      playSound("../sounds/game_over.mp3");
     }
 
     if (this.score > hiScore) hiScore = this.score;
@@ -48,7 +48,7 @@ class Game {
     );
 
     if (!asteroids.length) {
-      playSound("level_complete.mp3");
+      playSound("../sounds/level_complete.mp3");
       Asteroid.init(++this.asteroidCount, this.ship, this.mode);
     }
 
@@ -65,7 +65,7 @@ class Game {
   }
 
   setMode(currentMode) {
-    playSound("shoot.mp3");
+    playSound("../sounds/shoot.mp3");
     this.mode = gameModes[currentMode];
     this.asteroidCount = Math.ceil(asteroidCount * this.mode);
     Asteroid.init(this.asteroidCount, this.ship, this.mode);

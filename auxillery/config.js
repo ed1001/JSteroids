@@ -21,7 +21,7 @@ const thrustSize = 4;
 const thrustVariance = 22;
 let thrustRed;
 let playingThrustSound = false;
-const thrustSound = new Audio("thrust.mp3");
+const thrustSound = new Audio("../sounds/thrust.mp3");
 thrustSound.loop = true;
 
 // asteroid
