@@ -1,8 +1,3 @@
-const debrisCount = 30;
-const debrisTime = 500;
-const debrisSize = 1;
-const debrisVelocity = 4;
-
 class Particle {
   constructor(x, y, vx, vy, t) {
     this.x = x;
@@ -41,6 +36,3 @@ class Particle {
     }
   }
 }
-
-// Math.random() * (radians(ship.a + 22) - radians(ship.a - 22)) +
-// radians(ship.a - 22);

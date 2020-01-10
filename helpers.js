@@ -6,6 +6,10 @@ function capNum(num, max) {
   return num > max ? max : num;
 }
 
+function between(a, b, x) {
+  return x > a && x < b;
+}
+
 function translate(object) {
   object.x += object.vx;
   object.y += object.vy;
@@ -16,6 +20,13 @@ function translate(object) {
   if (object.y < 0) object.y = canvas.height;
 }
 
+function checkProximity(x, y, x1, y1, distance) {
+  const a = Math.abs(x - x1);
+  const b = Math.abs(y - y1);
+  const c = Math.sqrt(a * a + b * b);
+  return c < distance;
+}
+
 function drawBg(ctx) {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -23,7 +34,7 @@ function drawBg(ctx) {
 
 function drawText(font, text, x, y, flash, colour = gameColour) {
   ctx.font = font;
-  ctx.fillStyle = flash ? flashFillStyle(0.03, 0.5, colour) : colour;
+  ctx.fillStyle = flash ? flashFillStyle(0.03, 0.5, colour, opacity) : colour;
   ctx.fillText(text, x, y);
 }
 
@@ -76,24 +87,17 @@ function playPauseLoop(sound, play) {
 }
 
 function playBoomSound(size) {
-  let sound;
-
   switch (size) {
     case asteroidSizes.large:
-      sound = new Audio("boom_big.mp3");
+      sound = new Audio("boom_big.mp3").play();
       break;
     case asteroidSizes.medium:
-      sound = new Audio("boom_mid.mp3");
+      sound = new Audio("boom_mid.mp3").play();
       break;
     case asteroidSizes.small:
-      sound = new Audio("boom_small.mp3");
+      sound = new Audio("boom_small.mp3").play();
       break;
     default:
       break;
   }
-  sound.play();
-}
-
-function between(a, b, x) {
-  return x > a && x < b;
 }

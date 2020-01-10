@@ -1,13 +1,12 @@
-const gameStates = Object.freeze({ pre: 1, play: 2, post: 3 });
-
 class Game {
   constructor(lives, restartTimer) {
     this.lives = lives;
     this.restartTimer = restartTimer * 60;
     this.score = 0;
-    this.ship = new Ship(canvas, shipSize);
-    Asteroid.init(asteroidCount, this.ship);
+    this.ship = new Ship(canvas, shipSize, false);
     this.state = gameStates.pre;
+    this.mode = gameModes.easy;
+    Asteroid.init(asteroidCount, this.ship);
   }
 
   pre() {
@@ -20,6 +19,7 @@ class Game {
       asteroid.draw(ctx);
     });
   }
+
   play() {
     if (this.ship.lives <= 0) {
       this.state = gameStates.post;
@@ -68,7 +68,7 @@ class Game {
     asteroids.forEach(asteroid => {
       translate(asteroid);
       bullets.forEach(bullet => {
-        asteroid.collide(asteroid, asteroids, bullets, canvas);
+        asteroid.collide(canvas);
       });
       if (this.state == gameStates.play) this.ship.collide(asteroid);
       asteroid.draw(ctx);

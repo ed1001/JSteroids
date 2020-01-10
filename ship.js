@@ -1,24 +1,3 @@
-const shipSize = 20;
-const rotateSpeed = 3;
-const thrust = 8 / 60;
-const maxSpeed = 10;
-
-const shipDebrisTime = 1500;
-const shipDebrisSize = 4;
-
-let shipDebrisOpacity = 1;
-let opacity = 1;
-let opacityDesc = true;
-
-const thrustTime = 85;
-const thrustVelocity = 5;
-const thrustSize = 4;
-const thrustVariance = 22;
-let thrustRed;
-let playingThrustSound = false;
-const thrustSound = new Audio("thrust.mp3");
-thrustSound.loop = true;
-
 class Ship {
   constructor(canvas, radius) {
     this.startX = this.x = canvas.width / 2;
@@ -65,10 +44,16 @@ class Ship {
   }
 
   collide(asteroid) {
-    const a = Math.abs(this.x - asteroid.x);
-    const b = Math.abs(this.y - asteroid.y);
-    const c = Math.sqrt(a * a + b * b);
-    if (c < asteroid.r + this.r && !this.invulnerable) {
+    if (
+      checkProximity(
+        this.x,
+        this.y,
+        asteroid.x,
+        asteroid.y,
+        asteroid.r + this.r
+      ) &&
+      !this.invulnerable
+    ) {
       Particle.burst(
         shipDebris,
         debrisCount,

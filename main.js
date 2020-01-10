@@ -7,12 +7,6 @@ let hiScore = 0;
 const restartTimerSecs = 3;
 const gameColour = "rgba(0, 255, 255, 1)";
 
-let bullets = [];
-let asteroids = [];
-let debris = [];
-let shipDebris = [];
-let thrustParticles = [];
-
 let game = new Game(lives, restartTimerSecs);
 window.requestAnimationFrame(update);
 

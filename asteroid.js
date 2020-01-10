@@ -1,11 +1,3 @@
-const asteroidSizes = Object.freeze({ large: 90, medium: 35, small: 12 });
-const asteroidSpeed = 4;
-const spacing = 400;
-const leftBoundX = 360 - asteroidSizes["large"];
-const rightBoundX = 875 + asteroidSizes["large"];
-const topBoundY = 270 - asteroidSizes["large"];
-const botBoundY = 430 + asteroidSizes["large"];
-
 class Asteroid {
   constructor(sides, x, y, r, vx, vy) {
     this.sides = sides;
@@ -44,7 +36,7 @@ class Asteroid {
       do {
         x = Math.floor(Math.random() * canvas.width);
         y = Math.floor(Math.random() * canvas.height);
-      } while (Asteroid.checkProximity(x, y, ship.x, ship.y));
+      } while (checkProximity(x, y, ship.x, ship.y, spacing));
       Asteroid.create(
         asteroids,
         asteroidSizes.large,
@@ -54,13 +46,6 @@ class Asteroid {
         Math.random() * asteroidSpeed - asteroidSpeed / 2
       );
     }
-  }
-
-  static checkProximity(x, y, x1, y1) {
-    const a = Math.abs(x - x1);
-    const b = Math.abs(y - y1);
-    const c = Math.sqrt(a * a + b * b);
-    return c < spacing;
   }
 
   draw(ctx) {
@@ -86,12 +71,9 @@ class Asteroid {
 
   collide(canvas) {
     bullets.forEach(bullet => {
-      const a = Math.abs(this.x - bullet.x);
-      const b = Math.abs(this.y - bullet.y);
-      const c = Math.sqrt(a * a + b * b);
-      if (c < this.r) {
+      if (checkProximity(this.x, this.y, bullet.x, bullet.y, this.r)) {
         incrementScore(this.r);
-        this.break(asteroids, canvas);
+        this.break(asteroids);
         asteroids.splice(asteroids.indexOf(this), 1);
         bullets.splice(bullets.indexOf(bullet), 1);
         Particle.burst(
@@ -114,8 +96,8 @@ class Asteroid {
       this.r === asteroidSizes.large
         ? asteroidSizes.medium
         : asteroidSizes.small;
-    Asteroid.create(asteroids, size, this.x, this.y, this.vy, this.vx);
-    Asteroid.create(asteroids, size, this.x, this.y, -this.vy, -this.vx);
+    Asteroid.create(asteroids, size, this.x, this.y, -this.vy, this.vx);
+    Asteroid.create(asteroids, size, this.x, this.y, this.vy, -this.vx);
   }
 
   bounceTitle() {
