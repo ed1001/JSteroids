@@ -65,6 +65,7 @@ class Game {
   }
 
   setMode(currentMode) {
+    playSound("shoot.mp3");
     this.mode = gameModes[currentMode];
     this.asteroidCount = Math.ceil(asteroidCount * this.mode);
     Asteroid.init(this.asteroidCount, this.ship, this.mode);
