@@ -63,7 +63,7 @@ class Ship {
         360
       );
       this.reset();
-      playSound("ship_crash.mp3");
+      playSound("../sounds/ship_crash.mp3");
       shipDebrisOpacity = 1;
     }
   }

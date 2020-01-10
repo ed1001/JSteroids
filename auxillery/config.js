@@ -1,7 +1,14 @@
 // game
 const gameStates = Object.freeze({ pre: 1, play: 2, post: 3 });
 const gameModes = Object.freeze({ 1: 1, 2: 1.5, 3: 2.5 });
+const gameColours = Object.freeze({
+  1: "rgba(255, 255, 255, 1)",
+  2: "rgba(0, 255, 255, 1)",
+  3: "rgba(255, 255, 0, 1)"
+});
 let currentMode = 1;
+let currentColour = 1;
+let menuLevel = 1;
 
 // ship
 const shipSize = 20;
@@ -21,7 +28,7 @@ const thrustSize = 4;
 const thrustVariance = 22;
 let thrustRed;
 let playingThrustSound = false;
-const thrustSound = new Audio("thrust.mp3");
+const thrustSound = new Audio("../sounds/thrust.mp3");
 thrustSound.loop = true;
 
 // asteroid

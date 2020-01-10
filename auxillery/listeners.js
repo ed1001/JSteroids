@@ -9,25 +9,28 @@ document.addEventListener("keydown", e => {
       break;
     case "ArrowLeft":
       if (game.state === gameStates.pre) {
-        if (currentMode-- < 2) currentMode = 3;
-        game.setMode(currentMode);
+        menuLevel === 1 ? 
       }
       game.ship.rot = -rotateSpeed;
       break;
     case "ArrowUp":
+      if (game.state === gameStates.pre) menuLevel = 1;
       game.ship.thrusting = true;
       if (!playingThrustSound && game.state === gameStates.play) {
         playPauseLoop(thrustSound, true);
         playingThrustSound = true;
       }
       break;
+    case "ArrowDown":
+      if (game.state === gameStates.pre) menuLevel = 2;
+      break;
     case " ":
       if (loaded && game.state === gameStates.play) {
         game.ship.shoot();
-        playSound("shoot.mp3");
+        playSound("../sounds/shoot.mp3");
       }
       if (game.state === gameStates.pre) {
-        playSound("start_game.mp3");
+        playSound("../sounds/start_game.mp3");
         game.state = gameStates.play;
       }
       loaded = false;
