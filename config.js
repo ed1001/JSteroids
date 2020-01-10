@@ -1,6 +1,7 @@
 // game
 const gameStates = Object.freeze({ pre: 1, play: 2, post: 3 });
-const gameModes = Object.freeze({ easy: 1, medium: 1.5, hard: 2 });
+const gameModes = Object.freeze({ 1: 1, 2: 1.5, 3: 2 });
+let currentMode = 1;
 
 // ship
 const shipSize = 20;
