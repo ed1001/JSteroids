@@ -12,7 +12,7 @@ class Game {
 
   pre() {
     this.score = 0;
-    this._drawTitle(360, 450, 400);
+    this._drawTitle(360, 450, 400, 470);
     asteroids.forEach(asteroid => {
       translate(asteroid);
       asteroid.bounceTitle();
@@ -82,7 +82,7 @@ class Game {
     });
   }
 
-  _drawTitle(titleY, modeY, startY) {
+  _drawTitle(titleY, modeY, startY, colourY) {
     drawText("130px Ariel", "JS-teroids", 360, titleY, false);
     drawText("40px Ariel", "push space to start", 450, startY, true);
     drawText("30px Ariel", "<", 440, modeY, true);
@@ -90,6 +90,9 @@ class Game {
     drawText("30px Ariel", "easy", 470, modeY, this.mode === gameModes[1]);
     drawText("30px Ariel", "hard", 555, modeY, this.mode === gameModes[2]);
     drawText("30px Ariel", "insane", 635, modeY, this.mode === gameModes[3]);
+    drawText("30px Ariel", "white", 470, colourY, this.mode === gameModes[1]);
+    drawText("30px Ariel", "blue", 555, colourY, this.mode === gameModes[2]);
+    drawText("30px Ariel", "yellow", 635, colourY, this.mode === gameModes[3]);
   }
 
   _drawParticles() {
