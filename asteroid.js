@@ -28,7 +28,8 @@ class Asteroid {
     asteroids.push(asteroid);
   }
 
-  static init(count, ship) {
+  static init(count, ship, mode) {
+    const velocity = asteroidSpeed * mode;
     asteroids = [];
     let x;
     let y;
@@ -42,8 +43,8 @@ class Asteroid {
         asteroidSizes.large,
         x,
         y,
-        Math.random() * asteroidSpeed - asteroidSpeed / 2,
-        Math.random() * asteroidSpeed - asteroidSpeed / 2
+        Math.random() * velocity - velocity / 2,
+        Math.random() * velocity - velocity / 2
       );
     }
   }

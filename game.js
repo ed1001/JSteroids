@@ -5,14 +5,13 @@ class Game {
     this.score = 0;
     this.ship = new Ship(canvas, shipSize, false);
     this.state = gameStates.pre;
-    this.mode = gameModes.easy;
-    Asteroid.init(asteroidCount, this.ship);
+    this.mode = gameModes[currentMode];
+    Asteroid.init(asteroidCount, this.ship, this.mode);
   }
 
   pre() {
     this.score = 0;
-    drawText("130px Ariel", "JS-teroids", 360, 360, false);
-    drawText("40px Ariel", "push space to start", 450, 420, true);
+    this._drawTitle(360, 450, 400);
     asteroids.forEach(asteroid => {
       translate(asteroid);
       asteroid.bounceTitle();
@@ -49,7 +48,7 @@ class Game {
 
     if (!asteroids.length) {
       playSound("level_complete.mp3");
-      Asteroid.init(++asteroidCount, this.ship);
+      Asteroid.init(++asteroidCount, this.ship, this.mode);
     }
 
     this._engageAsteroids();
@@ -64,6 +63,11 @@ class Game {
     if (this.restartTimer <= 0) game = new Game(lives, restartTimerSecs);
   }
 
+  setMode(currentMode) {
+    this.mode = gameModes[currentMode];
+    Asteroid.init(asteroidCount * this.mode, this.ship, this.mode);
+  }
+
   _engageAsteroids() {
     asteroids.forEach(asteroid => {
       translate(asteroid);
@@ -73,6 +77,16 @@ class Game {
       if (this.state == gameStates.play) this.ship.collide(asteroid);
       asteroid.draw(ctx);
     });
+  }
+
+  _drawTitle(titleY, modeY, startY) {
+    drawText("130px Ariel", "JS-teroids", 360, titleY, false);
+    drawText("40px Ariel", "push space to start", 450, startY, true);
+    drawText("30px Ariel", "<", 440, modeY, true);
+    drawText("30px Ariel", ">", 730, modeY, true);
+    drawText("30px Ariel", "easy", 470, modeY, this.mode === gameModes[1]);
+    drawText("30px Ariel", "hard", 555, modeY, this.mode === gameModes[2]);
+    drawText("30px Ariel", "insane", 635, modeY, this.mode === gameModes[3]);
   }
 
   _drawParticles() {

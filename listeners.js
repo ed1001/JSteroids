@@ -1,9 +1,17 @@
 document.addEventListener("keydown", e => {
   switch (e.key) {
     case "ArrowRight":
+      if (game.state === gameStates.pre) {
+        if (currentMode++ > 2) currentMode = 1;
+        game.setMode(currentMode);
+      }
       game.ship.rot = rotateSpeed;
       break;
     case "ArrowLeft":
+      if (game.state === gameStates.pre) {
+        if (currentMode-- < 2) currentMode = 3;
+        game.setMode(currentMode);
+      }
       game.ship.rot = -rotateSpeed;
       break;
     case "ArrowUp":

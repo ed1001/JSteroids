@@ -34,7 +34,7 @@ function drawBg(ctx) {
 
 function drawText(font, text, x, y, flash, colour = gameColour) {
   ctx.font = font;
-  ctx.fillStyle = flash ? flashFillStyle(0.03, 0.5, colour, opacity) : colour;
+  ctx.fillStyle = flash ? flashFillStyle(0.01, 0.5, colour, opacity) : colour;
   ctx.fillText(text, x, y);
 }
 
