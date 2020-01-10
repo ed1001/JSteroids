@@ -5,7 +5,7 @@ let lives = 4;
 let asteroidCount = 3;
 let hiScore = 0;
 const restartTimerSecs = 3;
-const gameColour = "rgba(255, 255, 255, 1)";
+const gameColour = gameColours[2];
 
 let game = new Game(lives, restartTimerSecs);
 window.requestAnimationFrame(update);
