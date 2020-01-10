@@ -2,8 +2,10 @@ function radians(degrees) {
   return degrees * (Math.PI / 180);
 }
 
-function capNum(num, max) {
-  return num > max ? max : num;
+function capNum(num, min, max) {
+  if (num > max) return max;
+  if (num < min) return min;
+  return num;
 }
 
 function between(a, b, x) {
@@ -32,7 +34,7 @@ function drawBg(ctx) {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawText(font, text, x, y, flash, colour = gameColour) {
+function drawText(font, text, x, y, flash, colour = gameColours[game.colour]) {
   ctx.font = font;
   ctx.fillStyle = flash ? flashFillStyle(0.01, 0.5, colour, opacity) : colour;
   ctx.fillText(text, x, y);
@@ -67,6 +69,10 @@ function drawShip(ctx, colour, x, y, r, a) {
     y + r * Math.sin(radians(50 + a))
   );
   ctx.stroke();
+}
+
+function menuNav(current) {
+  current = capNum(current, 0, 2);
 }
 
 function incrementScore(size) {

@@ -52,7 +52,7 @@ class Asteroid {
   draw(ctx) {
     let angle = this.a;
     let radiusVar;
-    ctx.strokeStyle = gameColour;
+    ctx.strokeStyle = gameColours[game.colour];
     ctx.beginPath();
     ctx.moveTo(
       this.x + radiusVar * Math.cos(radians(angle)),
@@ -70,7 +70,7 @@ class Asteroid {
     ctx.stroke();
   }
 
-  collide(canvas) {
+  collide() {
     bullets.forEach(bullet => {
       if (checkProximity(this.x, this.y, bullet.x, bullet.y, this.r)) {
         incrementScore(this.r);

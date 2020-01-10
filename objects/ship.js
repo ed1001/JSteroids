@@ -21,8 +21,16 @@ class Ship {
   }
 
   accelerate() {
-    this.vx = capNum((this.vx -= thrust * Math.cos(radians(this.a))), maxSpeed);
-    this.vy = capNum((this.vy -= thrust * Math.sin(radians(this.a))), maxSpeed);
+    this.vx = capNum(
+      (this.vx -= thrust * Math.cos(radians(this.a))),
+      -maxSpeed,
+      maxSpeed
+    );
+    this.vy = capNum(
+      (this.vy -= thrust * Math.sin(radians(this.a))),
+      -maxSpeed,
+      maxSpeed
+    );
   }
 
   transform() {

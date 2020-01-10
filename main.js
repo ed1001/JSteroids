@@ -4,10 +4,11 @@ var ctx = canvas.getContext("2d");
 let lives = 4;
 let asteroidCount = 3;
 let hiScore = 0;
+let gameMode = gameModes[0];
+let gameColour = gameColours[0];
 const restartTimerSecs = 3;
-const gameColour = gameColours[2];
 
-let game = new Game(lives, restartTimerSecs);
+let game = new Game(lives, restartTimerSecs, 0, 0);
 window.requestAnimationFrame(update);
 
 function update() {

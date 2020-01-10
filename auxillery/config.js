@@ -1,14 +1,12 @@
 // game
 const gameStates = Object.freeze({ pre: 1, play: 2, post: 3 });
-const gameModes = Object.freeze({ 1: 1, 2: 1.5, 3: 2.5 });
+const gameModes = Object.freeze({ 0: 1, 1: 2, 2: 3 });
 const gameColours = Object.freeze({
-  1: "rgba(255, 255, 255, 1)",
-  2: "rgba(0, 255, 255, 1)",
-  3: "rgba(255, 255, 0, 1)"
+  0: "rgba(255, 255, 255, 1)",
+  1: "rgba(0, 255, 255, 1)",
+  2: "rgba(255, 255, 0, 1)"
 });
-let currentMode = 1;
-let currentColour = 1;
-let menuLevel = 1;
+let menuLevel = 0;
 
 // ship
 const shipSize = 20;

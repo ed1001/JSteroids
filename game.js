@@ -1,18 +1,19 @@
 class Game {
-  constructor(lives, restartTimer) {
+  constructor(lives, restartTimer, mode, colour) {
     this.lives = lives;
     this.restartTimer = restartTimer * 60;
     this.score = 0;
     this.ship = new Ship(canvas, shipSize, false);
     this.state = gameStates.pre;
-    this.mode = gameModes[currentMode];
+    this.mode = mode;
+    this.colour = colour;
     this.asteroidCount = asteroidCount;
-    Asteroid.init(asteroidCount, this.ship, this.mode);
+    Asteroid.init(asteroidCount, this.ship, gameModes[this.mode]);
   }
 
   pre() {
     this.score = 0;
-    this._drawTitle(360, 450, 400, 470);
+    this._drawTitle(360, 400, 430, 455);
     asteroids.forEach(asteroid => {
       translate(asteroid);
       asteroid.bounceTitle();
@@ -32,10 +33,10 @@ class Game {
     drawText("20px Georgia", `Hi-Score: ${hiScore}`, 1000, 50, false);
 
     for (let i = 0; i < this.ship.lives; i++) {
-      drawShip(ctx, gameColour, 55 + i * 22, 70, 10, 90);
+      drawShip(ctx, gameColours[this.colour], 55 + i * 22, 70, 10, 90);
     }
 
-    this.ship.draw(ctx, gameColour);
+    this.ship.draw(ctx, gameColours[this.colour]);
     this.ship.transform();
 
     this._drawParticles();
@@ -49,7 +50,7 @@ class Game {
 
     if (!asteroids.length) {
       playSound("../sounds/level_complete.mp3");
-      Asteroid.init(++this.asteroidCount, this.ship, this.mode);
+      Asteroid.init(++this.asteroidCount, this.ship, gameModes[this.mode]);
     }
 
     this._engageAsteroids();
@@ -61,14 +62,24 @@ class Game {
     drawText("80px Ariel", "GAME OVER", 360, 360, false);
     this._engageAsteroids();
     this.restartTimer--;
-    if (this.restartTimer <= 0) game = new Game(lives, restartTimerSecs);
+    if (this.restartTimer <= 0)
+      game = new Game(lives, restartTimerSecs, this.mode, this.colour);
   }
 
-  setMode(currentMode) {
-    playSound("../sounds/shoot.mp3");
-    this.mode = gameModes[currentMode];
-    this.asteroidCount = Math.ceil(asteroidCount * this.mode);
-    Asteroid.init(this.asteroidCount, this.ship, this.mode);
+  setMode(increment) {
+    playSound("../sounds/menu_hori.mp3");
+    increment ? this.mode++ : this.mode--;
+    this.mode = capNum(this.mode, 0, 2);
+    gameMode = gameModes[this.mode];
+    this.asteroidCount = Math.ceil(asteroidCount * gameModes[this.mode]);
+    Asteroid.init(this.asteroidCount, this.ship, gameModes[this.mode]);
+  }
+
+  setColour(increment) {
+    playSound("../sounds/menu_hori.mp3");
+    increment ? this.colour++ : this.colour--;
+    this.colour = capNum(this.colour, 0, 2);
+    gameColour = gameColours[this.colour];
   }
 
   _engageAsteroids() {
@@ -82,22 +93,52 @@ class Game {
     });
   }
 
-  _drawTitle(titleY, modeY, startY, colourY) {
+  _drawTitle(titleY, startY, modeY, colourY) {
+    const arrowY = menuLevel ? colourY : modeY;
     drawText("130px Ariel", "JS-teroids", 360, titleY, false);
     drawText("40px Ariel", "push space to start", 450, startY, true);
-    drawText("30px Ariel", "<", 440, modeY, true);
-    drawText("30px Ariel", ">", 730, modeY, true);
-    drawText("30px Ariel", "easy", 470, modeY, this.mode === gameModes[1]);
-    drawText("30px Ariel", "hard", 555, modeY, this.mode === gameModes[2]);
-    drawText("30px Ariel", "insane", 635, modeY, this.mode === gameModes[3]);
-    drawText("30px Ariel", "white", 470, colourY, this.mode === gameModes[1]);
-    drawText("30px Ariel", "blue", 555, colourY, this.mode === gameModes[2]);
-    drawText("30px Ariel", "yellow", 635, colourY, this.mode === gameModes[3]);
+    drawText("30px Ariel", "<", 440, arrowY, true);
+    drawText("30px Ariel", ">", 730, arrowY, true);
+    drawText("30px Ariel", "easy", 470, modeY, this.mode === 0);
+    drawText("30px Ariel", "hard", 555, modeY, this.mode === 1);
+    drawText("30px Ariel", "insane", 635, modeY, this.mode === 2);
+    drawText(
+      "30px Ariel",
+      "white",
+      470,
+      colourY,
+      this.colour === 0,
+      gameColours[0]
+    );
+    drawText(
+      "30px Ariel",
+      "blue",
+      555,
+      colourY,
+      this.colour === 1,
+      gameColours[1]
+    );
+    drawText(
+      "30px Ariel",
+      "yellow",
+      635,
+      colourY,
+      this.colour === 2,
+      gameColours[2]
+    );
   }
 
   _drawParticles() {
-    bullets = Particle.drawParticles(bullets, bulletSize, gameColour);
-    debris = Particle.drawParticles(debris, debrisSize, gameColour);
+    bullets = Particle.drawParticles(
+      bullets,
+      bulletSize,
+      gameColours[this.colour]
+    );
+    debris = Particle.drawParticles(
+      debris,
+      debrisSize,
+      gameColours[this.colour]
+    );
     this.ship.drawDebris();
   }
 }
