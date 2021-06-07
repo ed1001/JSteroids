@@ -67,7 +67,7 @@ class Game {
   }
 
   setMode(increment) {
-    playSound("/sounds/menu_hori.mp3");
+    playSound("sounds/menu_hori.mp3");
     increment ? this.mode++ : this.mode--;
     this.mode = capNum(this.mode, 0, 2);
     gameMode = gameModes[this.mode];
@@ -76,7 +76,7 @@ class Game {
   }
 
   setColour(increment) {
-    playSound("/sounds/menu_hori.mp3");
+    playSound("sounds/menu_hori.mp3");
     increment ? this.colour++ : this.colour--;
     this.colour = capNum(this.colour, 0, 2);
     gameColour = gameColours[this.colour];
