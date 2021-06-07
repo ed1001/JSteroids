@@ -71,7 +71,7 @@ class Ship {
         360
       );
       this.reset();
-      playSound("../sounds/ship_crash.mp3");
+      playSound("JSteroids/sounds/ship_crash.mp3");
       shipDebrisOpacity = 1;
     }
   }

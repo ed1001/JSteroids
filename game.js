@@ -24,7 +24,7 @@ class Game {
   play() {
     if (this.ship.lives <= 0) {
       this.state = gameStates.post;
-      playSound("../sounds/game_over.mp3");
+      playSound("JSteroids/sounds/game_over.mp3");
     }
 
     if (this.score > hiScore) hiScore = this.score;
@@ -49,7 +49,7 @@ class Game {
     );
 
     if (!asteroids.length) {
-      playSound("../sounds/level_complete.mp3");
+      playSound("JSteroids/sounds/level_complete.mp3");
       Asteroid.init(++this.asteroidCount, this.ship, gameModes[this.mode]);
     }
 
@@ -67,7 +67,7 @@ class Game {
   }
 
   setMode(increment) {
-    playSound("sounds/menu_hori.mp3");
+    playSound("JSteroids/sounds/menu_hori.mp3");
     increment ? this.mode++ : this.mode--;
     this.mode = capNum(this.mode, 0, 2);
     gameMode = gameModes[this.mode];
@@ -76,7 +76,7 @@ class Game {
   }
 
   setColour(increment) {
-    playSound("sounds/menu_hori.mp3");
+    playSound("JSteroids/sounds/menu_hori.mp3");
     increment ? this.colour++ : this.colour--;
     this.colour = capNum(this.colour, 0, 2);
     gameColour = gameColours[this.colour];
