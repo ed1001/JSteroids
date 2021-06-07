@@ -14,7 +14,7 @@ document.addEventListener("keydown", e => {
       break;
     case "ArrowUp":
       if (game.state === gameStates.pre) {
-        playSound("JSteroids/sounds/menu_vert.mp3");
+        playSound("sounds/menu_vert.mp3");
         menuLevel = 0;
       }
       game.ship.thrusting = true;
@@ -25,17 +25,17 @@ document.addEventListener("keydown", e => {
       break;
     case "ArrowDown":
       if (game.state === gameStates.pre) {
-        playSound("JSteroids/sounds/menu_vert.mp3");
+        playSound("sounds/menu_vert.mp3");
         menuLevel = 1;
       }
       break;
     case " ":
       if (loaded && game.state === gameStates.play) {
         game.ship.shoot();
-        playSound("JSteroids/sounds/shoot.mp3");
+        playSound("sounds/shoot.mp3");
       }
       if (game.state === gameStates.pre) {
-        playSound("JSteroids/sounds/start_game.mp3");
+        playSound("sounds/start_game.mp3");
         game.state = gameStates.play;
       }
       loaded = false;

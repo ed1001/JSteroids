@@ -103,13 +103,13 @@ function playPauseLoop(sound, play) {
 function playBoomSound(size) {
   switch (size) {
     case asteroidSizes.large:
-      sound = new Audio("JSteroids/sounds/boom_big.mp3").play();
+      sound = new Audio("sounds/boom_big.mp3").play();
       break;
     case asteroidSizes.medium:
-      sound = new Audio("JSteroids/sounds/boom_mid.mp3").play();
+      sound = new Audio("sounds/boom_mid.mp3").play();
       break;
     case asteroidSizes.small:
-      sound = new Audio("JSteroids/sounds/boom_small.mp3").play();
+      sound = new Audio("sounds/boom_small.mp3").play();
       break;
     default:
       break;
